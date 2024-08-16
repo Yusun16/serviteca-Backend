@@ -20,8 +20,8 @@ public class AutoparteServicio implements IAutoparteServicio {
     }
 
     @Override
-    public Autoparte buscarAutopartePorId(Integer idAutoparte) {
-        Autoparte autoparte = autopoartesRepositorio.findById(idAutoparte).orElse(null);
+    public Autoparte buscarAutopartePorId(Integer idAutopartes) {
+        Autoparte autoparte = autopoartesRepositorio.findById(idAutopartes).orElse(null);
         return autoparte;
     }
 

@@ -18,7 +18,7 @@ import lombok.ToString;
 public class Autoparte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idAuparte;
+    Integer idAupartes;
     String referencia;
     String siigo;
     String descripcion;
