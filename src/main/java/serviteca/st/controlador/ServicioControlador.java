@@ -10,7 +10,9 @@ import serviteca.st.modelo.Servicio;
 import serviteca.st.servicio.IServicioServicio;
 import serviteca.st.servicio.ServicioSerivicio;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 //http://localhost:8080/serviteca
@@ -44,5 +46,15 @@ public class ServicioControlador {
         return ResponseEntity.ok(servicio);
     }
 
+    @DeleteMapping("/servicios/{id}")
+    public ResponseEntity<Map<String, Boolean>>eliminarServicio(@PathVariable Integer id) {
+        Servicio servicio = servicioServicio.buscarServicioPorId(id);
+        if (servicio == null)
+            throw new RecursoNoEncontradoExcepcion(id + " no encontrado");
+        servicioServicio.eliminarServicio(servicio);
+        Map<String, Boolean> respuesta = new HashMap<>();
+        respuesta.put("eliminado", Boolean.TRUE);
+        return ResponseEntity.ok(respuesta);
+    }
 
 }
