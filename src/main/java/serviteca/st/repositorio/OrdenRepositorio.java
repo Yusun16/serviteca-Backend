@@ -5,4 +5,5 @@ import serviteca.st.modelo.Orden;
 
 public interface OrdenRepositorio extends JpaRepository<Orden, Integer> {
 
+
 }
