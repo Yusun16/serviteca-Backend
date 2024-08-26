@@ -3,8 +3,10 @@ package serviteca.st.servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import serviteca.st.modelo.Orden;
+import serviteca.st.modelo.Servicio;
 import serviteca.st.repositorio.OrdenRepositorio;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,4 +37,16 @@ public class OrdenServicio implements IOrdenServicio{
         ordenRepositorio.delete(orden);
 
     }
+
+    @Override
+    public List<Orden> listordenbyparanst(Integer idOrden, String cliente, String placa, Date fecha) {
+        return ordenRepositorio.findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(idOrden, cliente, placa, fecha );
+
+    }
+
+    @Override
+    public String buscarCodigo() {
+        return ordenRepositorio.buscarCodigo();
+    }
+
 }

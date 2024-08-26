@@ -8,6 +8,7 @@ import serviteca.st.modelo.Orden;
 import serviteca.st.servicio.IOrdenServicio;
 import serviteca.st.servicio.OrdenServicio;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,4 +34,14 @@ public class OrdenControlador {
         logger.info("Orden a agregar: " + orden);
         return ordenServicio.guardarOrden(orden);
     }
+
+    @GetMapping("/buscarorden")
+    public List<Orden> buscarOrdenPorNombre(@RequestParam(required = false) Integer idOrden, @RequestParam String cliente, @RequestParam String placa, @RequestParam(required = false) Date fecha){
+    return ordenServicio.listordenbyparanst(idOrden,cliente,placa,fecha);
+    }
+
+    @GetMapping("/generarcodigo")
+    public String buscarCodigo(){
+        return ordenServicio.buscarCodigo();
+    };
 }

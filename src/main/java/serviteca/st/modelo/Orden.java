@@ -21,6 +21,7 @@ public class Orden {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer idOrden;
+    String codigo;
     String cliente;
     String tipoServicio;
     String placaVehiculo;
