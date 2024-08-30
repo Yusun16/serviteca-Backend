@@ -46,7 +46,11 @@ public class OrdenServicio implements IOrdenServicio{
 
     @Override
     public String buscarCodigo() {
-        return ordenRepositorio.buscarCodigo();
+        String ultimoCodigo = ordenRepositorio.buscarCodigo();
+        // Asumamos que el código es numérico y puede ser convertido a entero.
+        // Agregamos uno al último código y lo devolvemos.
+        int nuevoCodigo = Integer.parseInt(ultimoCodigo) + 1;
+        return String.valueOf(nuevoCodigo);
     }
 
 }
