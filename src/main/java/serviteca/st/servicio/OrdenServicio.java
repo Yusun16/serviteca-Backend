@@ -6,6 +6,7 @@ import serviteca.st.modelo.Orden;
 import serviteca.st.modelo.Servicio;
 import serviteca.st.repositorio.OrdenRepositorio;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -39,8 +40,8 @@ public class OrdenServicio implements IOrdenServicio{
     }
 
     @Override
-    public List<Orden> listordenbyparanst(Integer idOrden, String cliente, String placa, Date fecha) {
-        return ordenRepositorio.findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(idOrden, cliente, placa, fecha );
+    public List<Orden> listordenbyparanst(Integer codigo, String cliente, String placaVehiculo, LocalDate fecha) {
+        return ordenRepositorio.findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(codigo, cliente, placaVehiculo, fecha );
 
     }
 

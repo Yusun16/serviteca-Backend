@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -26,5 +27,5 @@ public class Orden {
     String tipoServicio;
     String placaVehiculo;
     String kilometraje;
-    Date fecha;
+    LocalDate fecha;
 }
