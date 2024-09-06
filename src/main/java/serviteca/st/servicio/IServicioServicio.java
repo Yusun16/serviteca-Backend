@@ -12,4 +12,12 @@ public interface IServicioServicio {
     public Servicio guardarServicio(Servicio servicio);
 
     public void eliminarServicio(Servicio servicio);
+
+    List<Servicio> buscarPorIdYDescripcion(Integer idServicio, String descripcion);
+
+    List<Servicio> buscarPorId(Integer idServicio);
+
+    List<Servicio> buscarPorDescripcion(String descripcion);
+
+    String obtenerNuevoCodigo();
 }

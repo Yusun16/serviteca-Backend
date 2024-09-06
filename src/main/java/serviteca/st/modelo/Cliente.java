@@ -15,17 +15,14 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 
-public class Servicio {
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idServicio;
-    String codigo;
-    String descripcion;
-    Double valorServicio;
-    String año;
-    String porcentajeOperario;
+    Integer idCliente;
+    Double cedula;
+    String nombre;
+    String ciudad;
 
 
-    
 }

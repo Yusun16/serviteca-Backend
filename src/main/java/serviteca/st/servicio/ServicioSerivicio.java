@@ -8,8 +8,7 @@ import serviteca.st.repositorio.ServicioRepositorio;
 import java.util.List;
 
 @Service
-
-public class ServicioSerivicio implements IServicioServicio{
+public class ServicioSerivicio implements IServicioServicio {
 
     @Autowired
     private ServicioRepositorio servicioRepositorio;
@@ -21,8 +20,7 @@ public class ServicioSerivicio implements IServicioServicio{
 
     @Override
     public Servicio buscarServicioPorId(Integer idServicio) {
-        Servicio servicio= servicioRepositorio.findById(idServicio).orElse(null);
-        return servicio;
+        return servicioRepositorio.findById(idServicio).orElse(null);
     }
 
     @Override
@@ -34,4 +32,26 @@ public class ServicioSerivicio implements IServicioServicio{
     public void eliminarServicio(Servicio servicio) {
         servicioRepositorio.delete(servicio);
     }
+
+    public List<Servicio> buscarPorIdYDescripcion(Integer idServicio, String descripcion) {
+        return servicioRepositorio.findByIdServicioAndDescripcionContaining(idServicio, descripcion);
+    }
+
+    public List<Servicio> buscarPorId(Integer idServicio) {
+        return servicioRepositorio.findByIdServicio(idServicio);
+    }
+
+    public List<Servicio> buscarPorDescripcion(String descripcion) {
+        return servicioRepositorio.findByDescripcionContaining(descripcion);
+    }
+
+    public String obtenerNuevoCodigo() {
+        Servicio ultimoServicio = servicioRepositorio.findTopByOrderByIdServicioDesc().orElse(null);
+        if (ultimoServicio != null) {
+            int nuevoCodigo = Integer.parseInt(ultimoServicio.getCodigo()) + 1;
+            return String.valueOf(nuevoCodigo);
+        }
+        return "1"; // Retorna "1" si no hay servicios existentes.
+    }
+
 }
