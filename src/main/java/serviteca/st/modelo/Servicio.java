@@ -23,7 +23,7 @@ public class Servicio {
     String codigo;
     String descripcion;
     Double valorServicio;
-    String año;
+    String ano;
     String porcentajeOperario;
 
 

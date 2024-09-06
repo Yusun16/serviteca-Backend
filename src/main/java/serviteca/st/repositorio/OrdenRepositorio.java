@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import serviteca.st.modelo.Orden;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ public interface OrdenRepositorio extends JpaRepository<Orden, Integer> {
     String buscarCodigo();
 
     List<Orden> findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(
-            Integer idOrden, String cliente, String placaVehiculo, Date fecha
+            Integer idOrden, String cliente, String placaVehiculo, LocalDate fecha
     );
 
 }

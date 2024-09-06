@@ -6,6 +6,7 @@ import serviteca.st.modelo.Orden;
 import serviteca.st.modelo.Servicio;
 import serviteca.st.repositorio.OrdenRepositorio;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -39,14 +40,18 @@ public class OrdenServicio implements IOrdenServicio{
     }
 
     @Override
-    public List<Orden> listordenbyparanst(Integer idOrden, String cliente, String placa, Date fecha) {
-        return ordenRepositorio.findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(idOrden, cliente, placa, fecha );
+    public List<Orden> listordenbyparanst(Integer codigo, String cliente, String placaVehiculo, LocalDate fecha) {
+        return ordenRepositorio.findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(codigo, cliente, placaVehiculo, fecha );
 
     }
 
     @Override
     public String buscarCodigo() {
-        return ordenRepositorio.buscarCodigo();
+        String ultimoCodigo = ordenRepositorio.buscarCodigo();
+        // Asumamos que el código es numérico y puede ser convertido a entero.
+        // Agregamos uno al último código y lo devolvemos.
+        int nuevoCodigo = Integer.parseInt(ultimoCodigo) + 1;
+        return String.valueOf(nuevoCodigo);
     }
 
 }

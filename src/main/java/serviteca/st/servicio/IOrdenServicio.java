@@ -3,6 +3,7 @@ package serviteca.st.servicio;
 import serviteca.st.modelo.Orden;
 import serviteca.st.modelo.Servicio;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface IOrdenServicio {
 
     public void eliminarOrden(Orden orden);
 
-    public List<Orden> listordenbyparanst(Integer idOrden, String cliente, String placa, Date fechaA);
+    public List<Orden> listordenbyparanst(Integer codigo, String cliente, String placaVehiculo, LocalDate fecha);
 
     public String buscarCodigo();
 
