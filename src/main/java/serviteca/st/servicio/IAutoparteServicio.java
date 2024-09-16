@@ -5,11 +5,11 @@ import serviteca.st.modelo.Autoparte;
 import java.util.List;
 
 public interface IAutoparteServicio {
-    public List<Autoparte> listarAutoparte();
+    List<Autoparte> listarAutoparte();
+    Autoparte guardarAutoparte(Autoparte autoparte);
+    void eliminarAutoparte(Autoparte autoparte);
+    Autoparte buscarAutopartePorId(Integer idAutoparte);
 
-    public Autoparte buscarAutopartePorId(Integer idAutoparte);
-
-    public Autoparte guardarAutoparte(Autoparte autoparte);
-
-    public void eliminarAutoparte(Autoparte autoparte);
+    String buscarCodigo();
+    List<Autoparte> listautopartebyparanst(String siigo, String referencia, String descripcion);
 }

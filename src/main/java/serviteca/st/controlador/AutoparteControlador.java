@@ -3,22 +3,19 @@ package serviteca.st.controlador;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
 import serviteca.st.modelo.Autoparte;
-import serviteca.st.servicio.AutoparteServicio;
 import serviteca.st.servicio.IAutoparteServicio;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 @RestController
-//http://localhost:8080/serviteca
 @RequestMapping("serviteca")
-@CrossOrigin(value = "http://localhost:3000")
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class AutoparteControlador {
     private static final Logger logger = LoggerFactory.getLogger(AutoparteControlador.class);
 
@@ -26,9 +23,48 @@ public class AutoparteControlador {
     private IAutoparteServicio autoparteServicio;
 
     @GetMapping("/autopartes")
-    public List<Autoparte> listarAutoparte(){
+    public List<Autoparte> listarAutoparte() {
         var autoparte = autoparteServicio.listarAutoparte();
-        autoparte.forEach((Autoparte -> logger.info(autoparte.toString())));
+        autoparte.forEach(ap -> logger.info(ap.toString()));
         return autoparte;
+    }
+
+    @PostMapping("/autopartes")
+    public ResponseEntity<Autoparte> guardarAutoparte(@RequestBody Autoparte autoparte) {
+        Autoparte nuevaAutoparte = autoparteServicio.guardarAutoparte(autoparte);
+        return ResponseEntity.ok(nuevaAutoparte);
+    }
+
+    //Capturar el id
+    @GetMapping("/autopartes/{id}")
+    public ResponseEntity<Autoparte> obtenerAutopartePorId(@PathVariable int id) {
+        Autoparte autoparte = autoparteServicio.buscarAutopartePorId(id);
+        if (autoparte == null)
+            throw new RecursoNoEncontradoExcepcion("no se encontro el id: " + id);
+        return ResponseEntity.ok(autoparte);
+    }
+
+    // Eliminar el id
+    @DeleteMapping("/autopartes/{id}")
+    public ResponseEntity<Map<String, Boolean>>eliminarAutoparte(@PathVariable int id) {
+        Autoparte autoparte = autoparteServicio.buscarAutopartePorId(id);
+        if (autoparte == null)
+            throw new RecursoNoEncontradoExcepcion("no se encontro el id: " + id);
+        autoparteServicio.eliminarAutoparte(autoparte);
+        Map<String, Boolean> respuesta = new HashMap<>();
+        respuesta.put("eliminado", Boolean.TRUE);
+        return ResponseEntity.ok(respuesta);
+    }
+
+    // Control de buscar. Buscar I
+    @GetMapping("/autopartes/buscar")
+    public List<Autoparte> buscarAutopartesPorItems(@RequestParam String siigo, @RequestParam String referencia, @RequestParam(required = false) String descripcion) {
+        return autoparteServicio.listautopartebyparanst(siigo, referencia, descripcion);
+    }
+
+    // Control de buscar. Buscar II
+    @GetMapping("/busqueda")
+    public String buscarCodigo() {
+        return autoparteServicio.buscarCodigo();
     }
 }

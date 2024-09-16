@@ -8,7 +8,6 @@ import serviteca.st.repositorio.AutopoartesRepositorio;
 import java.util.List;
 
 @Service
-
 public class AutoparteServicio implements IAutoparteServicio {
 
     @Autowired
@@ -20,11 +19,13 @@ public class AutoparteServicio implements IAutoparteServicio {
     }
 
     @Override
-    public Autoparte buscarAutopartePorId(Integer idAutopartes) {
-        Autoparte autoparte = autopoartesRepositorio.findById(idAutopartes).orElse(null);
+    public Autoparte buscarAutopartePorId(Integer idAutoparte) {
+        // Se hizo unos cambios!!!
+        Autoparte autoparte = autopoartesRepositorio.findById(idAutoparte).orElse(null);
         return autoparte;
     }
 
+    //Guardar = Crear
     @Override
     public Autoparte guardarAutoparte(Autoparte autoparte) {
         return autopoartesRepositorio.save(autoparte);
@@ -33,6 +34,17 @@ public class AutoparteServicio implements IAutoparteServicio {
     @Override
     public void eliminarAutoparte(Autoparte autoparte) {
         autopoartesRepositorio.delete(autoparte);
+    }
 
+    @Override
+    public List<Autoparte> listautopartebyparanst(String siigo, String referencia, String descripcion) {
+        return autopoartesRepositorio.findBySiigoOrReferenciaOrDescripcion(siigo, referencia, descripcion);
+    }
+
+    @Override
+    public String buscarCodigo() {
+        String searchCodigo = autopoartesRepositorio.buscarCodigo();
+        int nuevoCodigo = Integer.parseInt(searchCodigo);
+        return String.valueOf(nuevoCodigo);
     }
 }

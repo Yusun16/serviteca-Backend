@@ -24,7 +24,6 @@ public class Autoparte {
     String descripcion;
     String linea;
     String tipo;
-    String proveedor;
     String marca;
     String modelo;
 
