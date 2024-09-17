@@ -13,7 +13,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 @ToString
-@Table(name = "revision")
 public class Revision {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
