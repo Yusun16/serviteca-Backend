@@ -12,4 +12,8 @@ public interface IClienteServicio {
     public  Cliente guardarCliente(Cliente cliente);
 
     public void eliminarCliente(Cliente cliente);
+
+    List<Cliente> listarClientesbyparams(Integer cedula, String correo, Double telefono );
+
+    String buscarCedula();
 }

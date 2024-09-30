@@ -33,4 +33,17 @@ public class ClienteServicio implements IClienteServicio {
     public void eliminarCliente(Cliente cliente) {
         clienteRepositorio.delete(cliente);
     }
+
+    @Override
+    public List<Cliente> listarClientesbyparams(Integer cedula, String correo, Double telefono) {
+        return clienteRepositorio.findByCedulaOrCorreoOrTelefono(cedula,correo,telefono);
+    }
+
+    @Override
+    public String buscarCedula() {
+        String searchCedula = clienteRepositorio.buscarCedula();
+        int nuevaCedula = Integer.parseInt(searchCedula);
+        return String.valueOf(nuevaCedula);
+    }
+
 }

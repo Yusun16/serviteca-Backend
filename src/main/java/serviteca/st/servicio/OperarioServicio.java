@@ -3,6 +3,8 @@ package serviteca.st.servicio;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,6 +29,7 @@ import static serviteca.st.constant.Constant.PHOTO_DIRECTORY;
 @RequiredArgsConstructor
 public class OperarioServicio {
 
+    private static final Logger log = LoggerFactory.getLogger(OperarioServicio.class);
     private final OperarioRepositorio operarioRepositorio;
 
     public List<Operario> listarOperarios() {

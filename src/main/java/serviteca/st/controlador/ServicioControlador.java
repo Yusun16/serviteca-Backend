@@ -52,6 +52,7 @@ public class ServicioControlador {
         Map<String, Boolean> respuesta = new HashMap<>();
         respuesta.put("eliminado", Boolean.TRUE);
         return ResponseEntity.ok(respuesta);
+        
     }
 
     @GetMapping("/servicios/buscar")
