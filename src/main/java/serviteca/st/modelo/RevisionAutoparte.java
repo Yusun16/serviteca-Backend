@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import java.time.LocalDate;
 
 @Entity
 @Data
@@ -13,18 +12,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 
-public class Orden {
+public class RevisionAutoparte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idOrden;
-    String codigo;
-    String tipoServicio;
-    String placaVehiculo;
-    String kilometraje;
-    LocalDate fecha;
+    Integer id;
 
     @ManyToOne
     Revision revision;
     @ManyToOne
-    Cliente cliente;
+    Autoparte autoparte;
 }

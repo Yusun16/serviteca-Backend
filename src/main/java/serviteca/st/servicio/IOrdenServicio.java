@@ -17,7 +17,7 @@ public interface IOrdenServicio {
 
     public void eliminarOrden(Orden orden);
 
-    public List<Orden> listordenbyparanst(Integer codigo, String cliente, String placaVehiculo, LocalDate fecha);
+    public List<Orden> listordenbyparanst(Integer codigo, String nombreCliente, String placaVehiculo, LocalDate fecha);
 
     public String buscarCodigo();
 

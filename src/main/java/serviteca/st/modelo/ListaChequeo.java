@@ -22,7 +22,6 @@ public class ListaChequeo {
     String Foto;
     String observacion;
     combustible combustible;
-
     @ManyToOne
     Orden orden;
 
