@@ -17,7 +17,7 @@ import lombok.ToString;
 public class Vehiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String id;
+    Integer id;
     String placa;
     String marca;
     String linea;
