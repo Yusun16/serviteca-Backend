@@ -12,10 +12,9 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class Cliente {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idCliente;
+    Integer id;
     Integer cedula;
     String nombre;
     String apellido;

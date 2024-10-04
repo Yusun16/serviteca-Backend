@@ -27,6 +27,9 @@ public class Revision {
     String observationsRight;
     String observationsLeft;
     String observationsIndicador;
+
+    @ManyToOne
+    Revision revision;
     @ManyToOne
     Servicio servicio;
 }

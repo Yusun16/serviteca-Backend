@@ -23,8 +23,8 @@ public class Orden {
     String kilometraje;
     LocalDate fecha;
 
+
     @ManyToOne
-    Revision revision;
-    @ManyToOne
-    Cliente cliente;
+    @JoinColumn (name = "cliente_id")
+    private Cliente clienteId;
 }

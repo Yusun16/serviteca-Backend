@@ -14,13 +14,13 @@ public interface OrdenRepositorio extends JpaRepository<Orden, Integer> {
     @Query(value="select codigo from orden where id_orden=(select max(id_orden) from orden);",nativeQuery = true)
     String buscarCodigo();
 
-    @Query(value = "select o.* " +
+    @Query(value = " select o.* " +
             " from orden o " +
-            " inner join cliente c on o.id_cliente = c.id  " +
-            " where o.id_orden = :idOrden " +
-            " OR c.nombre = :nombreCliente " +
-            " OR o.placa_vehiculo = :placaVehiculo " +
-            " OR o.fecha = :fecha", nativeQuery = true)
+            " left join cliente c on o.cliente_id = c.id " +
+            " where (:fecha is null or o.fecha = :fecha) " +
+            " and (:idOrden is null or o.id_orden = :idOrden) " +
+            " and (:nombreCliente is null or c.nombre = :nombreCliente) " +
+            " and (:placaVehiculo is null or o.placa_vehiculo = :placaVehiculo) ", nativeQuery = true)
     List<Orden> findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(
             Integer idOrden, String nombreCliente, String placaVehiculo, LocalDate fecha
     );
