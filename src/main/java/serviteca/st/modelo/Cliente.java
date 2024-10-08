@@ -15,7 +15,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    Integer cedula;
+    String cedula;
     String nombre;
     String apellido;
     String correo;

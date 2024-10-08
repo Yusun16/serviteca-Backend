@@ -19,8 +19,8 @@ public class ClienteServicio implements IClienteServicio {
     }
 
     @Override
-    public Cliente buscarClientePorId(Integer idCliente) {
-        Cliente cliente = clienteRepositorio.findById(idCliente).orElse(null);
+    public Cliente buscarClientePorId(Integer id) {
+        Cliente cliente = clienteRepositorio.findById(id).orElse(null);
         return cliente;
     }
 
@@ -35,15 +35,14 @@ public class ClienteServicio implements IClienteServicio {
     }
 
     @Override
-    public List<Cliente> listarClientesbyparams(Integer cedula, String correo, Double telefono) {
+    public List<Cliente> listarClientesbyparams(String cedula, String correo, Double telefono) {
         return clienteRepositorio.findByCedulaOrCorreoOrTelefono(cedula,correo,telefono);
     }
 
-    @Override
     public String buscarCedula() {
         String searchCedula = clienteRepositorio.buscarCedula();
-        int nuevaCedula = Integer.parseInt(searchCedula);
-        return String.valueOf(nuevaCedula);
+        return searchCedula;
     }
+
 
 }

@@ -1,7 +1,5 @@
 package serviteca.st.controlador;
 
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
 import serviteca.st.modelo.Cliente;
-import serviteca.st.modelo.Servicio;
+import serviteca.st.modelo.Operario;
+import serviteca.st.modelo.Vehiculo;
 import serviteca.st.servicio.IClienteServicio;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 @RestController
 @RequestMapping("serviteca")
@@ -35,7 +33,7 @@ public class ClienteControlador {
 }
 
 @PostMapping("/cliente")
-    public Cliente agregarEmpleado(@RequestBody Cliente cliente){
+    public Cliente agregarCliente(@RequestBody Cliente cliente){
     logger.info("Cliente a agregar: " + cliente);
     return clienteServicio.guardarCliente(cliente);
 }
@@ -69,11 +67,23 @@ obtenerClientePorId(@PathVariable Integer id){
         return ResponseEntity.ok(cliente);
     }
 
+    // Control de buscar. Buscar I
+    @GetMapping("/cliente/buscar")
+    public List<Cliente> buscarClientesPorItems(@RequestParam String cedula, @RequestParam String correo, @RequestParam Double telefono) {
+        return clienteServicio.listarClientesbyparams(cedula, correo, telefono);
+    }
+
+    // Control de buscar. Buscar II
+    @GetMapping("/busqueda-cliente")
+    public String buscarCedula() {
+        return clienteServicio.buscarCedula();
+    }
+
     @DeleteMapping("/cliente/{id}")
     public ResponseEntity<Map<String, Boolean>> eliminarCliente(@PathVariable Integer id) {
         Cliente cliente = clienteServicio.buscarClientePorId(id);
         if (cliente == null)
-            throw new RecursoNoEncontradoExcepcion(id + " no encontrado");
+            throw new RecursoNoEncontradoExcepcion("no se encontro el id:" + id);
         clienteServicio.eliminarCliente(cliente);
         Map<String, Boolean> respuesta = new HashMap<>();
         respuesta.put("eliminado", Boolean.TRUE);

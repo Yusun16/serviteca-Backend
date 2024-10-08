@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import serviteca.st.modelo.Operario;
 import serviteca.st.modelo.Vehiculo;
 import serviteca.st.repositorio.VehiculoRepositorio;
 
@@ -36,8 +37,17 @@ public class VehiculoServicio{
     }
 
 
+    public Vehiculo getVehiculo(String id) {
+        return vehiculoRepositorio.findById(id).orElseThrow(() -> new RuntimeException("Vehiculo no encontrado"));
+    }
+
     public Vehiculo buscarVehiculoPorId(String id) {
-        return vehiculoRepositorio.findById(id).orElse(null);
+        Vehiculo vehiculo = vehiculoRepositorio.findById(id).orElse(null);
+        return vehiculo;
+    }
+
+    public List<Vehiculo> listarVehiculobyparams(String placa, String marca) {
+        return vehiculoRepositorio.findByPlacaOrMarca(placa, marca);
     }
 
 

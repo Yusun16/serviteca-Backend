@@ -16,8 +16,8 @@ public interface VehiculoRepositorio extends JpaRepository<Vehiculo, String> {
     @Query(value = "select placa from vehiculo where id=(select max(id) from vehiculo);", nativeQuery = true)
     String buscarPlaca();
 
-    List<Vehiculo> findByPlacaOrObservacionOrModelo(
-            String placa, String observacion, String modelo
+    List<Vehiculo> findByPlacaOrMarca(
+            String placa, String marca
     );
 
 
