@@ -22,9 +22,7 @@ public class Orden {
     String placaVehiculo;
     String kilometraje;
     LocalDate fecha;
-
-
     @ManyToOne
-    @JoinColumn (name = "cliente_id")
-    private Cliente clienteId;
+    @JoinColumn (name = "vehiculo_id")
+    private Vehiculo vehiculo;
 }

@@ -22,7 +22,9 @@ public class Vehiculo {
     String marca;
     String linea;
     String modelo;
-    String cliente;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    Cliente cliente;
     String foto;
     String observacion;
 

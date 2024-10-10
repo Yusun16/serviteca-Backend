@@ -2,6 +2,7 @@ package serviteca.st.repositorio;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
 
 import java.time.LocalDate;
@@ -24,5 +25,15 @@ public interface OrdenRepositorio extends JpaRepository<Orden, Integer> {
     List<Orden> findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(
             Integer idOrden, String nombreCliente, String placaVehiculo, LocalDate fecha
     );
+
+
+    @Query(value = "select  " +
+            "v.id as vehiculoId, " +
+            "v.placa, " +
+            "concat(c.nombre, c.apellido) as nombreCliente " +
+            " from cliente c " +
+            " inner join vehiculo v on c.id = v.cliente_id " +
+            " where c.id = :clienteId", nativeQuery = true)
+    List<vehiculosClientes>  findVehiculosClientes(Integer clienteId);
 
 }

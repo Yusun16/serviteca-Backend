@@ -1,5 +1,6 @@
 package serviteca.st.servicio;
 
+import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
 import serviteca.st.modelo.Servicio;
 
@@ -20,5 +21,7 @@ public interface IOrdenServicio {
     public List<Orden> listordenbyparanst(Integer codigo, String nombreCliente, String placaVehiculo, LocalDate fecha);
 
     public String buscarCodigo();
+
+    public List<vehiculosClientes>  findVehiculosClientes(Integer clienteId);
 
 }

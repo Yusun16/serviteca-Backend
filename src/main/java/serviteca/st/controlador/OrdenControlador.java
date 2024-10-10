@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
 import serviteca.st.servicio.IOrdenServicio;
 import serviteca.st.servicio.OrdenServicio;
@@ -45,4 +46,9 @@ public class OrdenControlador {
     public String buscarCodigo(){
         return ordenServicio.buscarCodigo();
     };
+
+    @GetMapping("/vehiculosCliente/{clienteId}")
+    public List<vehiculosClientes> findVehiculosClientes(@PathVariable Integer clienteId) {
+        return ordenServicio.findVehiculosClientes(clienteId);
+    }
 }

@@ -2,6 +2,7 @@ package serviteca.st.servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
 import serviteca.st.modelo.Servicio;
 import serviteca.st.repositorio.OrdenRepositorio;
@@ -52,6 +53,11 @@ public class OrdenServicio implements IOrdenServicio{
         // Agregamos uno al último código y lo devolvemos.
         int nuevoCodigo = Integer.parseInt(ultimoCodigo) + 1;
         return String.valueOf(nuevoCodigo);
+    }
+
+    @Override
+    public List<vehiculosClientes> findVehiculosClientes(Integer clienteId) {
+        return ordenRepositorio.findVehiculosClientes(clienteId);
     }
 
 }
