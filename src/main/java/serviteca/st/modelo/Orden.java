@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -18,11 +19,13 @@ public class Orden {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer idOrden;
     String codigo;
-    String tipoServicio;
-    String placaVehiculo;
     String kilometraje;
     LocalDate fecha;
+    LocalTime hora;
     @ManyToOne
     @JoinColumn (name = "vehiculo_id")
     private Vehiculo vehiculo;
+    @ManyToOne
+    @JoinColumn (name = "servicio_id")
+    Servicio servicio;
 }

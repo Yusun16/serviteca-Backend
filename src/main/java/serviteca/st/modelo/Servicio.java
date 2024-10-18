@@ -20,8 +20,10 @@ public class Servicio {
     String codigo;
     String descripcion;
     Double valorServicio;
+    String nombre;
     String ano;
     String porcentajeOperario;
+
     @ManyToOne
     Operario operario;
 

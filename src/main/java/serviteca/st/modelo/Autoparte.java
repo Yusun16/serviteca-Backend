@@ -1,9 +1,6 @@
 package serviteca.st.modelo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,10 +19,14 @@ public class Autoparte {
     String referencia;
     String siigo;
     String descripcion;
+    String nombre;
     String linea;
     String tipo;
     String marca;
     String modelo;
 
+    @ManyToOne
+    @JoinColumn (name = "servicio_id")
+    Servicio servicio;
 
 }

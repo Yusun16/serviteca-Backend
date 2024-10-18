@@ -29,7 +29,7 @@ public class Revision {
     String observationsIndicador;
 
     @ManyToOne
-    Revision revision;
+    Orden orden;
     @ManyToOne
     Servicio servicio;
 }
