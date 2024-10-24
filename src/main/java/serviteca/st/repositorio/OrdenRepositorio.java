@@ -2,6 +2,7 @@ package serviteca.st.repositorio;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import serviteca.st.modelo.Dto.EjecucionServicioDto;
 import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
 
@@ -36,4 +37,19 @@ public interface OrdenRepositorio extends JpaRepository<Orden, Integer> {
             " where c.id = :clienteId", nativeQuery = true)
     List<vehiculosClientes>  findVehiculosClientes(Integer clienteId);
 
+    @Query(value = "select  " +
+            "vehiculo.placa as placaVehiculo,  " +
+            "orden.codigo as codigoOrden,  " +
+            "orden.fecha as fechaOrden, " +
+            "orden.hora as horaOrden, " +
+            "revision.img_frontal as imgFrontalRevision,  " +
+            "revision.img_back as imgBackRevision, " +
+            "servicio.nombre as nombreServicio " +
+            " " +
+            "from orden  " +
+            "inner join vehiculo on orden.vehiculo_id = vehiculo.id " +
+            "inner join revision on orden.id_orden = revision.orden_id_orden " +
+            "inner join servicio on orden.servicio_id = servicio.id_servicio " +
+            "where orden.id_orden = :idOrden", nativeQuery = true)
+            List<EjecucionServicioDto>  findejecucionservicio(Integer idOrden);
 }
