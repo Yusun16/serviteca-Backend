@@ -15,4 +15,5 @@ public interface AutopoartesRepositorio extends JpaRepository<Autoparte, Integer
     List<Autoparte> findBySiigoOrReferenciaOrDescripcion(
         String siigo, String referencia, String descripcion
     );
+
 }

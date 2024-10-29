@@ -24,6 +24,7 @@ public class Autoparte {
     String tipo;
     String marca;
     String modelo;
+    String cantidad;
 
     @ManyToOne
     @JoinColumn (name = "servicio_id")
