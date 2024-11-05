@@ -42,8 +42,10 @@ public interface OrdenRepositorio extends JpaRepository<Orden, Integer> {
             "orden.codigo as codigoOrden,  " +
             "orden.fecha as fechaOrden, " +
             "orden.hora as horaOrden, " +
+            "orden.id_orden as idOrden,"+
             "revision.img_frontal as imgFrontalRevision,  " +
             "revision.img_back as imgBackRevision, " +
+            "revision.id as idRevision,"+
             "servicio.nombre as nombreServicio " +
             " " +
             "from orden  " +

@@ -12,4 +12,6 @@ public interface EjecucionServicioDto {
     String getImgFrontalRevision();
     String getImgBackRevision();
     String  getNombreServicio();
+    Integer getIdOrden();
+    Integer getIdRevision();
 }

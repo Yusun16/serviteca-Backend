@@ -12,17 +12,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 
-public class Servicio {
-
+public class OrdenAutoparte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer idServicio;
-    String codigo;
-    String descripcion;
-    Double valorServicio;
-    String nombre;
-    String ano;
-    String porcentajeOperario;
+    Integer id;
+    @ManyToOne
+    @JoinColumn (name = "autoparte_id")
+    private Autoparte autoparte;
 
-    
+    @ManyToOne
+    @JoinColumn (name = "orden_id")
+    private Orden orden;
 }

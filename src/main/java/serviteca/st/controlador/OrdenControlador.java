@@ -3,10 +3,13 @@ package serviteca.st.controlador;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import serviteca.st.modelo.Dto.ApiResponseDto;
 import serviteca.st.modelo.Dto.EjecucionServicioDto;
 import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
+import serviteca.st.modelo.Revision;
 import serviteca.st.servicio.IOrdenServicio;
 import serviteca.st.servicio.OrdenServicio;
 
@@ -56,5 +59,16 @@ public class OrdenControlador {
     @GetMapping("/ejecucion")
     public List<EjecucionServicioDto> findejecucionservicio(Integer idOrden) {
         return ordenServicio.findejecucionservicio(idOrden);
+    }
+
+    @PutMapping("/orden/{id}")
+    public ResponseEntity<ApiResponseDto<Revision>> update(@PathVariable Integer id, @RequestBody Orden
+            object) {
+        try {
+            ordenServicio.update(id, object);
+            return ResponseEntity.ok(new ApiResponseDto<>("Datos actualizados", null, true));
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(new ApiResponseDto<Revision>(e.getMessage(), null, false));
+        }
     }
 }

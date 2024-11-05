@@ -3,11 +3,13 @@ package serviteca.st.servicio;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import serviteca.st.modelo.Revision;
 import serviteca.st.repositorio.RevisionRepositorio;
+import serviteca.st.utils.GlobalConstants;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -107,5 +109,18 @@ public class RevisionServicio {
             throw new RuntimeException("No se puede guardar la imagen: " + exception.getMessage(), exception);
         }
     };
+
+    public void update(String id, Revision object) throws Exception {
+        Optional<Revision> optionalEntity = revisionRepositorio.findById(id);
+
+        if (optionalEntity.isEmpty()) {
+            throw new Exception("No se encontró registro");
+        }
+
+        Revision entityToUpdate = optionalEntity.get();
+        BeanUtils.copyProperties(object, entityToUpdate, GlobalConstants.EXCLUDED_FIELDS.toArray(new String[0]));
+
+        revisionRepositorio.save(entityToUpdate);
+    }
 
 }

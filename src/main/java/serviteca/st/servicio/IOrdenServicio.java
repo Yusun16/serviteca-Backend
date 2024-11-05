@@ -27,4 +27,5 @@ public interface IOrdenServicio {
 
     public List<EjecucionServicioDto>  findejecucionservicio(Integer idOrden);
 
+    void update(Integer id, Orden object) throws Exception;
 }

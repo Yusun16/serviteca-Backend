@@ -22,10 +22,16 @@ public class Orden {
     String kilometraje;
     LocalDate fecha;
     LocalTime hora;
+    Boolean estado;
+    LocalDate fechaFin;
+    LocalTime horaFin;
+    String observaciones;
     @ManyToOne
     @JoinColumn (name = "vehiculo_id")
     private Vehiculo vehiculo;
     @ManyToOne
     @JoinColumn (name = "servicio_id")
     Servicio servicio;
+    @ManyToOne
+    Operario operario;
 }
