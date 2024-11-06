@@ -11,6 +11,7 @@ import serviteca.st.modelo.Revision;
 import serviteca.st.repositorio.RevisionRepositorio;
 import serviteca.st.utils.GlobalConstants;
 
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -118,9 +119,40 @@ public class RevisionServicio {
         }
 
         Revision entityToUpdate = optionalEntity.get();
-        BeanUtils.copyProperties(object, entityToUpdate, GlobalConstants.EXCLUDED_FIELDS.toArray(new String[0]));
 
+        updateNonNullProperties(object, entityToUpdate);
+
+        // Guardar la entidad actualizada
         revisionRepositorio.save(entityToUpdate);
     }
+
+    private void updateNonNullProperties(Revision source, Revision target) {
+        Field[] fields = Revision.class.getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(source);
+
+                if (value != null) {
+                    if (field.getName().equals("imgFrontal") || field.getName().equals("imgBack") ||
+                            field.getName().equals("imgRight") || field.getName().equals("imgLeft") ||
+                            field.getName().equals("imgIndicador")) {
+
+                        // Si la URL de la imagen no es nula, actualiza la imagen
+                        if (value instanceof String && !((String) value).isEmpty()) {
+                            field.set(target, value);
+                        }
+                    } else {
+                        field.set(target, value);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
 }

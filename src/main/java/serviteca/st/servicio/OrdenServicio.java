@@ -10,6 +10,7 @@ import serviteca.st.modelo.Revision;
 import serviteca.st.modelo.Servicio;
 import serviteca.st.repositorio.OrdenRepositorio;
 import serviteca.st.utils.GlobalConstants;
+import java.lang.reflect.Field;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -86,9 +87,28 @@ public class OrdenServicio implements IOrdenServicio{
         }
 
         Orden entityToUpdate = optionalEntity.get();
-        BeanUtils.copyProperties(object, entityToUpdate, GlobalConstants.EXCLUDED_FIELDS.toArray(new String[0]));
+
+        updateNonNullProperties(object, entityToUpdate);
 
         ordenRepositorio.save(entityToUpdate);
+    }
+
+
+    private void updateNonNullProperties(Orden source, Orden target) {
+        Field[] fields = Orden.class.getDeclaredFields();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                Object value = field.get(source);
+                if (value != null) {
+                    field.set(target, value);
+                }
+            } catch (IllegalAccessException e) {
+
+                e.printStackTrace();
+            }
+        }
     }
 
 
