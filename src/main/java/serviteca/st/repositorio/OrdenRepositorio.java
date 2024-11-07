@@ -3,6 +3,7 @@ package serviteca.st.repositorio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import serviteca.st.modelo.Dto.EjecucionServicioDto;
+import serviteca.st.modelo.Dto.buscarOrdenEspecificaDto;
 import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
 
@@ -16,15 +17,24 @@ public interface OrdenRepositorio extends JpaRepository<Orden, Integer> {
     @Query(value="select codigo from orden where id_orden=(select max(id_orden) from orden);",nativeQuery = true)
     String buscarCodigo();
 
-    @Query(value = " select o.* " +
-            " from orden o " +
-            " left join cliente c on o.cliente_id = c.id " +
-            " where (:fecha is null or o.fecha = :fecha) " +
-            " and (:idOrden is null or o.id_orden = :idOrden) " +
-            " and (:nombreCliente is null or c.nombre = :nombreCliente) " +
-            " and (:placaVehiculo is null or o.placa_vehiculo = :placaVehiculo) ", nativeQuery = true)
-    List<Orden> findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(
-            Integer idOrden, String nombreCliente, String placaVehiculo, LocalDate fecha
+    @Query(value = " select   " +
+            "o.id_orden AS idOrden,  " +
+            "o.fecha,  " +
+            "o.kilometraje,  " +
+            "o.codigo,  " +
+            "o.observaciones,  " +
+            "concat(op.nombre, ' ', op.apellido) AS nombreOperario  " +
+            "from orden o  " +
+            "inner join operario op on o.operario_id = op.id  " +
+            "inner join vehiculo v on o.vehiculo_id = v.id  " +
+            "inner join cliente c on v.cliente_id = c.id  " +
+            "where   " +
+            "(:codigo is null or o.codigo = :codigo) AND  " +
+            "(:nombreCliente is null or concat(c.nombre, ' ', c.apellido) = :nombreCliente) AND  " +
+            "(:fecha is null or o.fecha = :fecha) AND  " +
+            "(:placa is null or v.placa = :placa) ", nativeQuery = true)
+    List<buscarOrdenEspecificaDto> buscarOrdenEspecifica(
+            String codigo, String nombreCliente, LocalDate fecha, String placa
     );
 
 
@@ -46,8 +56,14 @@ public interface OrdenRepositorio extends JpaRepository<Orden, Integer> {
             "revision.img_frontal as imgFrontalRevision,  " +
             "revision.img_back as imgBackRevision, " +
             "revision.id as idRevision,"+
-            "servicio.nombre as nombreServicio " +
-            " " +
+            "servicio.nombre as nombreServicio, " +
+            "orden.operario_id as operarioId, " +
+            "orden.estado, " +
+            "orden.fecha_fin as fechaFinal, " +
+            "orden.hora_fin as horaFinal,  " +
+            "orden.observaciones as observacion, " +
+            "revision.img_frontal_despues as imgFrontalDespues," +
+            "revision.img_back_despues as imgPosteriorDespues " +
             "from orden  " +
             "inner join vehiculo on orden.vehiculo_id = vehiculo.id " +
             "inner join revision on orden.id_orden = revision.orden_id_orden " +

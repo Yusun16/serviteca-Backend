@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serviteca.st.modelo.Dto.ApiResponseDto;
 import serviteca.st.modelo.Dto.EjecucionServicioDto;
+import serviteca.st.modelo.Dto.buscarOrdenEspecificaDto;
 import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
 import serviteca.st.modelo.Revision;
@@ -42,8 +43,13 @@ public class OrdenControlador {
     }
 
     @GetMapping("/buscarorden")
-    public List<Orden> buscarOrdenPorNombre(@RequestParam(required = false) Integer codigo, @RequestParam (required = false) String nombreCliente, @RequestParam (required = false) String placaVehiculo, @RequestParam(required = false) LocalDate fecha){
-    return ordenServicio.listordenbyparanst(codigo,nombreCliente,placaVehiculo,fecha);
+    public List<buscarOrdenEspecificaDto> buscarOrdenEspecifica(
+            @RequestParam(required = false) String codigo,
+            @RequestParam(required = false) String nombreCliente,
+            @RequestParam(required = false) String placaVehiculo,
+            @RequestParam(required = false) LocalDate fecha
+            ){
+    return ordenServicio.buscarOrdenEspecifica(codigo,nombreCliente,fecha, placaVehiculo);
     }
 
     @GetMapping("/generarcodigo")

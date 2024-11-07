@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import serviteca.st.modelo.Dto.EjecucionServicioDto;
+import serviteca.st.modelo.Dto.buscarOrdenEspecificaDto;
 import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
 import serviteca.st.modelo.Revision;
@@ -43,12 +44,6 @@ public class OrdenServicio implements IOrdenServicio{
     @Override
     public void eliminarOrden(Orden orden) {
         ordenRepositorio.delete(orden);
-
-    }
-
-    @Override
-    public List<Orden> listordenbyparanst(Integer codigo, String nombreCliente, String placaVehiculo, LocalDate fecha) {
-        return ordenRepositorio.findByIdOrdenOrClienteAndPlacaVehiculoOrFecha(codigo, nombreCliente, placaVehiculo, fecha );
 
     }
 
@@ -93,6 +88,10 @@ public class OrdenServicio implements IOrdenServicio{
         ordenRepositorio.save(entityToUpdate);
     }
 
+    @Override
+    public List<buscarOrdenEspecificaDto> buscarOrdenEspecifica(String codigo, String nombreCliente, LocalDate fecha, String placa) {
+        return ordenRepositorio.buscarOrdenEspecifica(codigo, nombreCliente, fecha, placa);
+    }
 
     private void updateNonNullProperties(Orden source, Orden target) {
         Field[] fields = Orden.class.getDeclaredFields();

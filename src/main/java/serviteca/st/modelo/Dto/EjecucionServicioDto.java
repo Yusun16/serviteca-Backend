@@ -14,4 +14,12 @@ public interface EjecucionServicioDto {
     String  getNombreServicio();
     Integer getIdOrden();
     Integer getIdRevision();
+
+    Integer getOperarioId();
+    Boolean getEstado();
+    LocalDate getFechaFinal();
+    LocalTime getHoraFinal();
+    String getObservacion();
+    String getImgFrontalDespues();
+    String getImgPosteriorDespues();
 }

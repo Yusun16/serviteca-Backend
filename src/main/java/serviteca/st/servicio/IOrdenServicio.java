@@ -1,6 +1,7 @@
 package serviteca.st.servicio;
 
 import serviteca.st.modelo.Dto.EjecucionServicioDto;
+import serviteca.st.modelo.Dto.buscarOrdenEspecificaDto;
 import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
 import serviteca.st.modelo.Servicio;
@@ -19,8 +20,6 @@ public interface IOrdenServicio {
 
     public void eliminarOrden(Orden orden);
 
-    public List<Orden> listordenbyparanst(Integer codigo, String nombreCliente, String placaVehiculo, LocalDate fecha);
-
     public String buscarCodigo();
 
     public List<vehiculosClientes>  findVehiculosClientes(Integer clienteId);
@@ -28,4 +27,6 @@ public interface IOrdenServicio {
     public List<EjecucionServicioDto>  findejecucionservicio(Integer idOrden);
 
     void update(Integer id, Orden object) throws Exception;
+
+    List<buscarOrdenEspecificaDto> buscarOrdenEspecifica(String codigo, String nombreCliente, LocalDate fecha, String placa);
 }
