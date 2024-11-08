@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
+import serviteca.st.modelo.Dto.InfoServicioDto;
 import serviteca.st.modelo.Servicio;
 import serviteca.st.servicio.IServicioServicio;
 
@@ -75,5 +76,10 @@ public class ServicioControlador {
     public ResponseEntity<String> obtenerNuevoCodigo() {
         String nuevoCodigo = servicioServicio.obtenerNuevoCodigo();
         return ResponseEntity.ok(nuevoCodigo);
+    }
+
+    @GetMapping("/consultarInformeServicio")
+    public List<InfoServicioDto> buscarInformeServicio(@RequestParam String anio,@RequestParam(required = false) String mes,@RequestParam(required = false) String codigo) {
+        return servicioServicio.buscarInformeServicio(anio, mes, codigo);
     }
 }

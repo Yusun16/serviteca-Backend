@@ -1,5 +1,6 @@
 package serviteca.st.servicio;
 
+import serviteca.st.modelo.Dto.InfoServicioDto;
 import serviteca.st.modelo.Servicio;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface IServicioServicio {
     List<Servicio> buscarPorDescripcion(String descripcion);
 
     String obtenerNuevoCodigo();
+
+    List<InfoServicioDto> buscarInformeServicio(String anio, String mes, String codigo);
 }

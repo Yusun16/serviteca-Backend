@@ -2,6 +2,7 @@ package serviteca.st.servicio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import serviteca.st.modelo.Dto.InfoServicioDto;
 import serviteca.st.modelo.Servicio;
 import serviteca.st.repositorio.ServicioRepositorio;
 
@@ -52,6 +53,11 @@ public class ServicioSerivicio implements IServicioServicio {
             return String.valueOf(nuevoCodigo);
         }
         return "1"; // Retorna "1" si no hay servicios existentes.
+    }
+
+    @Override
+    public List<InfoServicioDto> buscarInformeServicio(String anio, String mes, String codigo) {
+        return servicioRepositorio.buscarInformeServicio(anio, mes, codigo);
     }
 
 }
