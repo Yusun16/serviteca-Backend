@@ -3,6 +3,7 @@ package serviteca.st.servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import serviteca.st.modelo.Autoparte;
+import serviteca.st.modelo.Dto.AutoparteDto;
 import serviteca.st.modelo.OrdenAutoparte;
 import serviteca.st.repositorio.OrdenAutoparteRepositorio;
 
@@ -51,7 +52,7 @@ public class OrdenAutoparteServicio implements IOrdenAutoparteServicio {
     }
 
     @Override
-    public List<Autoparte> buscarAutopartePorOrdenId(Integer ordenId) {
+    public List<AutoparteDto> buscarAutopartePorOrdenId(Integer ordenId) {
         return ordenAutoparteRepositorio.buscarAutopartePorOrdenId(ordenId);
     }
 }

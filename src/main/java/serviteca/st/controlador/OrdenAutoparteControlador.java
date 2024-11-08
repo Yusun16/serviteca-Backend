@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serviteca.st.modelo.Autoparte;
+import serviteca.st.modelo.Dto.AutoparteDto;
 import serviteca.st.modelo.OrdenAutoparte;
 import serviteca.st.servicio.IOrdenAutoparteServicio;
 
@@ -55,7 +56,7 @@ public class OrdenAutoparteControlador {
     }
 
     @GetMapping("/consultarAutopartePorId")
-    public List<Autoparte> buscarAutopartePorOrdenId(@RequestParam Integer ordenId) {
+    public List<AutoparteDto> buscarAutopartePorOrdenId(@RequestParam Integer ordenId) {
         return ordenAutoparteServicio.buscarAutopartePorOrdenId(ordenId);
     }
 }
