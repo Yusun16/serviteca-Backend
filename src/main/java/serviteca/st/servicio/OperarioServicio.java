@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import serviteca.st.modelo.Dto.InfoOperarioDto;
 import serviteca.st.modelo.Operario;
 import serviteca.st.repositorio.OperarioRepositorio;
 
@@ -27,7 +28,7 @@ import static serviteca.st.constant.Constant.PHOTO_DIRECTORY;
 @Slf4j
 @Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
-public class OperarioServicio {
+public class OperarioServicio implements IOperarioServicio {
 
     private static final Logger log = LoggerFactory.getLogger(OperarioServicio.class);
     private final OperarioRepositorio operarioRepositorio;
@@ -96,4 +97,9 @@ public class OperarioServicio {
             throw new RuntimeException("No se puede guardar la imagen" + exception.getMessage(), exception);
         }
     };
+
+    @Override
+    public List<InfoOperarioDto> consultarInformeOperario(String anio, String mes, String cedula) {
+        return operarioRepositorio.consultarInformeOperario(anio, mes, cedula);
+    }
 }

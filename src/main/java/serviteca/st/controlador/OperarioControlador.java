@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
+import serviteca.st.modelo.Dto.InfoOperarioDto;
 import serviteca.st.modelo.Operario;
 import serviteca.st.servicio.OperarioServicio;
 
@@ -80,5 +81,10 @@ public class OperarioControlador {
     @GetMapping("/busqueda-operario")
     public String buscarCedula() {
         return operarioServicio.buscarCedula();
+    }
+
+    @GetMapping("/consultarInformeOperario")
+    public List<InfoOperarioDto> consultarInformeOperario(@RequestParam String anio,@RequestParam(required = false) String mes,@RequestParam(required = false) String cedula) {
+        return operarioServicio.consultarInformeOperario(anio, mes, cedula);
     }
 }
