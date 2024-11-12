@@ -3,6 +3,7 @@ package serviteca.st.servicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import serviteca.st.modelo.Autoparte;
+import serviteca.st.modelo.Dto.InfoAutoparteDto;
 import serviteca.st.repositorio.AutopoartesRepositorio;
 
 import java.util.List;
@@ -39,6 +40,11 @@ public class AutoparteServicio implements IAutoparteServicio {
     @Override
     public List<Autoparte> listautopartebyparanst(String siigo, String referencia, String descripcion) {
         return autopoartesRepositorio.findBySiigoOrReferenciaOrDescripcion(siigo, referencia, descripcion);
+    }
+
+    @Override
+    public List<InfoAutoparteDto> informeAutoparte(String anio, String mes, String codigo) {
+        return autopoartesRepositorio.informeAutoparte(anio, mes, codigo);
     }
 
     @Override

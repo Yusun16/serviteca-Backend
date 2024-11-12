@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
 import serviteca.st.modelo.Autoparte;
+import serviteca.st.modelo.Dto.InfoAutoparteDto;
 import serviteca.st.servicio.IAutoparteServicio;
 
 import java.util.HashMap;
@@ -66,5 +67,10 @@ public class AutoparteControlador {
     @GetMapping("/busqueda")
     public String buscarCodigo() {
         return autoparteServicio.buscarCodigo();
+    }
+
+    @GetMapping("/consultarInformeAutoparte")
+    public List<InfoAutoparteDto> informeAutoparte(@RequestParam String anio,@RequestParam(required = false) String mes,@RequestParam(required = false) String codigo) {
+        return autoparteServicio.informeAutoparte(anio, mes, codigo);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import serviteca.st.modelo.Autoparte;
 import serviteca.st.modelo.Dto.AutoparteDto;
 import serviteca.st.modelo.OrdenAutoparte;
+import serviteca.st.repositorio.AutopoartesRepositorio;
 import serviteca.st.repositorio.OrdenAutoparteRepositorio;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public class OrdenAutoparteServicio implements IOrdenAutoparteServicio {
 
     @Autowired
     private OrdenAutoparteRepositorio ordenAutoparteRepositorio;
+    @Autowired
+    private AutopoartesRepositorio autopoartesRepositorio;
 
     @Override
     public List<OrdenAutoparte> listarOrdenAutoparteServicio() {
@@ -23,21 +26,46 @@ public class OrdenAutoparteServicio implements IOrdenAutoparteServicio {
 
     @Override
     public OrdenAutoparte guardarOrdenAutoparteServicio(OrdenAutoparte ordenAutoparte) {
-        // Verifica si ya existe un registro con el mismo orden_id y autoparte_id
         Optional<OrdenAutoparte> existente = ordenAutoparteRepositorio
                 .findByOrdenIdAndAutoparteId(ordenAutoparte.getOrden().getIdOrden(), ordenAutoparte.getAutoparte().getIdAupartes());
 
+        Autoparte autoparte = autopoartesRepositorio.findById(ordenAutoparte.getAutoparte().getIdAupartes())
+                .orElseThrow(() -> new IllegalArgumentException("La autoparte no existe en el inventario"));
+
+        int cantidadSolicitada = ordenAutoparte.getCantidad();
+
         if (existente.isPresent()) {
-            // Actualiza el registro existente
             OrdenAutoparte registroExistente = existente.get();
+
+            int diferenciaCantidad = cantidadSolicitada - registroExistente.getCantidad();
+            int nuevaCantidadInventario = autoparte.getCantidad() - diferenciaCantidad;
+
+            if (nuevaCantidadInventario < 0) {
+                throw new IllegalArgumentException("No hay suficiente inventario de autoparte.");
+            }
+
+            autoparte.setCantidad(nuevaCantidadInventario);
+            autopoartesRepositorio.save(autoparte);
+
+            registroExistente.setCantidad(cantidadSolicitada);
             registroExistente.setOrden(ordenAutoparte.getOrden());
-            registroExistente.setAutoparte(ordenAutoparte.getAutoparte());
+            registroExistente.setAutoparte(autoparte);
+
             return ordenAutoparteRepositorio.save(registroExistente);
         } else {
-            // Guarda un nuevo registro
+            int nuevaCantidadInventario = autoparte.getCantidad() - cantidadSolicitada;
+
+            if (nuevaCantidadInventario < 0) {
+                throw new IllegalArgumentException("No hay suficiente inventario de autoparte.");
+            }
+
+            autoparte.setCantidad(nuevaCantidadInventario);
+            autopoartesRepositorio.save(autoparte);
+
             return ordenAutoparteRepositorio.save(ordenAutoparte);
         }
     }
+
 
 
     @Override
@@ -48,7 +76,7 @@ public class OrdenAutoparteServicio implements IOrdenAutoparteServicio {
     @Override
     public OrdenAutoparte buscarOrdenAutoparteServicioPorId(Integer idOrdenAutoparteServicio) {
         Optional<OrdenAutoparte> ordenAutoparte = ordenAutoparteRepositorio.findById(idOrdenAutoparteServicio);
-        return ordenAutoparte.orElse(null); // Retorna null si no encuentra el objeto
+        return ordenAutoparte.orElse(null);
     }
 
     @Override

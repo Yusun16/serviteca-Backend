@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import serviteca.st.modelo.Dto.ApiResponseDto;
-import serviteca.st.modelo.Dto.EjecucionServicioDto;
-import serviteca.st.modelo.Dto.buscarOrdenEspecificaDto;
-import serviteca.st.modelo.Dto.vehiculosClientes;
+import serviteca.st.modelo.Dto.*;
 import serviteca.st.modelo.Orden;
 import serviteca.st.modelo.Revision;
 import serviteca.st.servicio.IOrdenServicio;
@@ -76,5 +73,10 @@ public class OrdenControlador {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(new ApiResponseDto<Revision>(e.getMessage(), null, false));
         }
+    }
+
+    @GetMapping("/historicoVehiculo")
+    public List<HistoricoVehiculoDto> consultarHistoricoVehiculo(@RequestParam Integer vehiculoId) {
+        return ordenServicio.consultarHistoricoVehiculo(vehiculoId);
     }
 }
