@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
 import serviteca.st.modelo.Autoparte;
@@ -22,7 +23,9 @@ public class AutoparteControlador {
     @Autowired
     private IAutoparteServicio autoparteServicio;
 
+    // Listar - Read -> cRud
     @GetMapping("/autopartes")
+    @PreAuthorize("hasRole('ASISTENTE') or hasRole('TALLER')")
     public List<Autoparte> listarAutoparte() {
         var autoparte = autoparteServicio.listarAutoparte();
         autoparte.forEach(ap -> logger.info(ap.toString()));
@@ -30,13 +33,15 @@ public class AutoparteControlador {
     }
 
     @PostMapping("/autopartes")
+    @PreAuthorize("hasRole('ASISTENTE')")
     public ResponseEntity<Autoparte> guardarAutoparte(@RequestBody Autoparte autoparte) {
         Autoparte nuevaAutoparte = autoparteServicio.guardarAutoparte(autoparte);
         return ResponseEntity.ok(nuevaAutoparte);
     }
 
-    //Capturar el id
+    //Capturar el id - Update -> crUd
     @GetMapping("/autopartes/{id}")
+    @PreAuthorize("hasRole('ASISTENTE')")
     public ResponseEntity<Autoparte> obtenerAutopartePorId(@PathVariable int id) {
         Autoparte autoparte = autoparteServicio.buscarAutopartePorId(id);
         if (autoparte == null)
@@ -46,6 +51,7 @@ public class AutoparteControlador {
 
     // Eliminar el id
     @DeleteMapping("/autopartes/{id}")
+    @PreAuthorize("hasRole('ASISTENTE')")
     public ResponseEntity<Map<String, Boolean>>eliminarAutoparte(@PathVariable int id) {
         Autoparte autoparte = autoparteServicio.buscarAutopartePorId(id);
         if (autoparte == null)
@@ -58,6 +64,7 @@ public class AutoparteControlador {
 
     // Control de buscar. Buscar I
     @GetMapping("/autopartes/buscar")
+    @PreAuthorize("hasRole('ASISTENTE')")
     public List<Autoparte> buscarAutopartesPorItems(@RequestParam String siigo, @RequestParam String referencia, @RequestParam(required = false) String descripcion) {
         return autoparteServicio.listautopartebyparanst(siigo, referencia, descripcion);
     }

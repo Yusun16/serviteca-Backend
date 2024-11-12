@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
 import serviteca.st.modelo.Cliente;
@@ -26,6 +27,7 @@ public class ClienteControlador {
     private IClienteServicio clienteServicio;
 
 @GetMapping("/cliente")
+@PreAuthorize("hasRole('TALLER')")
     public List<Cliente> obtenerClientes(){
     var clientes = clienteServicio.ListarClientes();
     clientes.forEach((cliente -> logger.info(cliente.toString())));
@@ -33,12 +35,14 @@ public class ClienteControlador {
 }
 
 @PostMapping("/cliente")
+@PreAuthorize("hasRole('TALLER')")
     public Cliente agregarCliente(@RequestBody Cliente cliente){
     logger.info("Cliente a agregar: " + cliente);
     return clienteServicio.guardarCliente(cliente);
 }
 
 @GetMapping("/cliente/{id}")
+@PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Cliente>
 obtenerClientePorId(@PathVariable Integer id){
   Cliente cliente = clienteServicio.buscarClientePorId(id);
@@ -48,6 +52,7 @@ obtenerClientePorId(@PathVariable Integer id){
 }
 
     @PutMapping("/cliente/{id}")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Cliente> actualizarCliente(@PathVariable Integer id,
                                                      @RequestBody Cliente clienteRecibido){
         Cliente cliente = clienteServicio.buscarClientePorId(id);
@@ -69,17 +74,20 @@ obtenerClientePorId(@PathVariable Integer id){
 
     // Control de buscar. Buscar I
     @GetMapping("/cliente/buscar")
+    @PreAuthorize("hasRole('TALLER')")
     public List<Cliente> buscarClientesPorItems(@RequestParam String cedula, @RequestParam String correo, @RequestParam Double telefono) {
         return clienteServicio.listarClientesbyparams(cedula, correo, telefono);
     }
 
     // Control de buscar. Buscar II
     @GetMapping("/busqueda-cliente")
+    @PreAuthorize("hasRole('TALLER')")
     public String buscarCedula() {
         return clienteServicio.buscarCedula();
     }
 
     @DeleteMapping("/cliente/{id}")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Map<String, Boolean>> eliminarCliente(@PathVariable Integer id) {
         Cliente cliente = clienteServicio.buscarClientePorId(id);
         if (cliente == null)

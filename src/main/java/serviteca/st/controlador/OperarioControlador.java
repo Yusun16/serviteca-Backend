@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
@@ -32,6 +33,7 @@ public class OperarioControlador {
     private final OperarioServicio operarioServicio;
 
     @GetMapping("/operarios")
+    @PreAuthorize("hasRole('TALLER')")
     public List<Operario> listarOperarios() {
         var operario = operarioServicio.listarOperarios();
         operario.forEach(ap -> logger.info(ap.toString()));
@@ -39,17 +41,20 @@ public class OperarioControlador {
     }
 
     @PostMapping("/operarios")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Operario> crearOperario(@RequestBody Operario operario) {
         Operario nuevaOperario = operarioServicio.guardarOperario(operario);
         return ResponseEntity.ok(nuevaOperario);
     }
 
     @GetMapping("/operarios/{id}")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Operario> getOperario(@PathVariable(value = "id") String id) {
         return ResponseEntity.ok().body(operarioServicio.getOperario(id));
     }
 
     @PutMapping("/operarios/photo")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<String> uploadFoto(@RequestParam("id") String id, @RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok().body(operarioServicio.uploadFoto(id, file));
     }
@@ -61,6 +66,7 @@ public class OperarioControlador {
 
     // Eliminar el id
     @DeleteMapping("/operarios/{id}")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Map<String, Boolean>>eliminarOperario(@PathVariable String id) {
         Operario operario = operarioServicio.buscarOperarioPorId(id);
         if (operario == null)
@@ -73,12 +79,14 @@ public class OperarioControlador {
 
     // Control de buscar. Buscar I
     @GetMapping("/operarios/buscar")
+    @PreAuthorize("hasRole('TALLER')")
     public List<Operario> buscarOperariosPorItems(@RequestParam String cedula, @RequestParam String correo, @RequestParam String telefono) {
         return operarioServicio.listarOperariosbyparams(cedula, correo, telefono);
     }
 
     // Control de buscar. Buscar II
     @GetMapping("/busqueda-operario")
+    @PreAuthorize("hasRole('TALLER')")
     public String buscarCedula() {
         return operarioServicio.buscarCedula();
     }

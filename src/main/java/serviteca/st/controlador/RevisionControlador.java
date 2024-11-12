@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import serviteca.st.modelo.Dto.ApiResponseDto;
 import serviteca.st.modelo.Revision;
@@ -32,6 +33,7 @@ public class RevisionControlador {
     private final RevisionServicio revisionServicio;
 
     @GetMapping("/revisiones")
+    @PreAuthorize("hasRole('TALLER')")
     public List<Revision> listarRevision() {
         var revision = revisionServicio.listarRevision();
         revision.forEach(ap -> logger.info(ap.toString()));
@@ -39,28 +41,33 @@ public class RevisionControlador {
     }
 
     @GetMapping("/revisiones/{id}")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Revision> getRevision(@PathVariable(value = "id") String id) {
         return ResponseEntity.ok().body(revisionServicio.getRevision(id));
     }
 
     @PostMapping("/revisiones")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Revision> crearRevision(@RequestBody Revision revision) {
         Revision nuevoRevision = revisionServicio.guardarRevision(revision);
         return ResponseEntity.ok(nuevoRevision);
     }
 
     @PutMapping("/revisiones/uploadFotos")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<List<String>> uploadFotos(@RequestParam("id") String id, @RequestParam("files") MultipartFile[] files) {
         List<String> fotoUrls = revisionServicio.uploadFotos(id, files);
         return ResponseEntity.ok().body(fotoUrls);
     }
 
     @GetMapping(path = "/revisiones/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
+    @PreAuthorize("hasRole('TALLER')")
     public byte[] getFotografia(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
     }
 
     @PutMapping("/revisiones/{id}")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<ApiResponseDto<Revision>> update(@PathVariable String id, @RequestBody Revision object) {
         try {
             revisionServicio.update(id, object);

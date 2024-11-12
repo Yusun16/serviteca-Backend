@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
 import serviteca.st.modelo.Dto.InfoServicioDto;
@@ -24,6 +25,7 @@ public class ServicioControlador {
     private IServicioServicio servicioServicio;
 
     @GetMapping("/servicios")
+    @PreAuthorize("hasRole('INVENTARIO') or hasRole('ASISTENTE') or hasRole('TALLER')")
     public List<Servicio> listaServicios() {
         var servicios = servicioServicio.listarServicios();
         servicios.forEach(Servicio -> logger.info(servicios.toString()));
@@ -31,12 +33,14 @@ public class ServicioControlador {
     }
 
     @PostMapping("/servicios")
+    @PreAuthorize("hasRole('INVENTARIO')")
     public Servicio agregarEmpleado(@RequestBody Servicio servicio) {
         logger.info("Servicio guardado: " + servicio);
         return servicioServicio.guardarServicio(servicio);
     }
 
     @GetMapping("/servicios/{id}")
+    @PreAuthorize("hasRole('INVENTARIO')")
     public ResponseEntity<Servicio> obtenerServicioPorId(@PathVariable int id) {
         Servicio servicio = servicioServicio.buscarServicioPorId(id);
         if (servicio == null)
@@ -45,6 +49,7 @@ public class ServicioControlador {
     }
 
     @DeleteMapping("/servicios/{id}")
+    @PreAuthorize("hasRole('INVENTARIO')")
     public ResponseEntity<Map<String, Boolean>> eliminarServicio(@PathVariable Integer id) {
         Servicio servicio = servicioServicio.buscarServicioPorId(id);
         if (servicio == null)
@@ -57,6 +62,7 @@ public class ServicioControlador {
     }
 
     @GetMapping("/servicios/buscar")
+    @PreAuthorize("hasRole('INVENTARIO')")
     public List<Servicio> buscarServicios(
             @RequestParam(required = false) Integer idServicio,
             @RequestParam(required = false) String descripcion) {
@@ -73,6 +79,7 @@ public class ServicioControlador {
     }
 
     @GetMapping("/servicios/nuevo-codigo")
+    @PreAuthorize("hasRole('INVENTARIO')")
     public ResponseEntity<String> obtenerNuevoCodigo() {
         String nuevoCodigo = servicioServicio.obtenerNuevoCodigo();
         return ResponseEntity.ok(nuevoCodigo);

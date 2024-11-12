@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import serviteca.st.excepcion.RecursoNoEncontradoExcepcion;
@@ -33,6 +34,7 @@ class vehiculoControlador {
     private final VehiculoServicio vehiculoServicio;
 
     @GetMapping("/vehiculos")
+    @PreAuthorize("hasRole('TALLER')")
     public List<Vehiculo> obtenerVehiculos() {
         var vehiculo = vehiculoServicio.listarVehiculo();
         vehiculo.forEach(ap -> logger.info(ap.toString()));
@@ -40,28 +42,33 @@ class vehiculoControlador {
     }
 
     @PostMapping("/vehiculos")
+    @PreAuthorize("hasRole('TALLER')")
     public Vehiculo agregarVehiculo(@RequestBody Vehiculo vehiculo) {
         logger.info("Vehiculo a agregar: " + vehiculo);
         return vehiculoServicio.guardarVehiculo(vehiculo);
     }
 
     @GetMapping("/vehiculos/{id}")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Vehiculo> getVehiculo(@PathVariable(value = "id") String id) {
         return ResponseEntity.ok().body(vehiculoServicio.getVehiculo(id));
     }
 
     @PutMapping("/vehiculos/photo")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<String> uploadFoto(@RequestParam("id") String id, @RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok().body(vehiculoServicio.uploadFoto(id, file));
     }
 
     @GetMapping(path = "/vehiculos/image/{filename}", produces = {IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE})
+    @PreAuthorize("hasRole('TALLER')")
     public byte[] getFotografia(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(PHOTO_DIRECTORY + filename));
     }
 
     // Eliminar el id
     @DeleteMapping("/vehiculos/{id}")
+    @PreAuthorize("hasRole('TALLER')")
     public ResponseEntity<Map<String, Boolean>>eliminarVehiculo(@PathVariable String id) {
         Vehiculo vehiculo = vehiculoServicio.buscarVehiculoPorId(id);
         if (vehiculo == null)
@@ -74,6 +81,7 @@ class vehiculoControlador {
 
     // Control de buscar. Buscar I
     @GetMapping("/vehiculos/buscar")
+    @PreAuthorize("hasRole('TALLER')")
     public List<Vehiculo> buscarVehiculosPorItems(@RequestParam String placa, @RequestParam String marca) {
         return vehiculoServicio.listarVehiculobyparams(placa, marca);
     }
