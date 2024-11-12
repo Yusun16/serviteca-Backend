@@ -3,6 +3,7 @@ package serviteca.st.repositorio;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import serviteca.st.modelo.Dto.EjecucionServicioDto;
+import serviteca.st.modelo.Dto.HistoricoVehiculoDto;
 import serviteca.st.modelo.Dto.buscarOrdenEspecificaDto;
 import serviteca.st.modelo.Dto.vehiculosClientes;
 import serviteca.st.modelo.Orden;
@@ -70,4 +71,21 @@ public interface OrdenRepositorio extends JpaRepository<Orden, Integer> {
             "inner join servicio on orden.servicio_id = servicio.id_servicio " +
             "where orden.id_orden = :idOrden", nativeQuery = true)
             List<EjecucionServicioDto>  findejecucionservicio(Integer idOrden);
+
+
+    @Query(value = "SELECT " +
+            "   o.id_orden as idOrden,  " +
+            "    o.fecha AS fechaOrden, " +
+            "    o.kilometraje AS kilometros, " +
+            "    CONCAT(op.nombre, ' ', op.apellido) AS nombreOperario, " +
+            "    o.observaciones AS observacion " +
+            "FROM  " +
+            "    serviteca.orden o " +
+            "JOIN  " +
+            "    serviteca.vehiculo v ON o.vehiculo_id = v.id " +
+            "JOIN  " +
+            "    serviteca.operario op ON o.operario_id = op.id " +
+            "WHERE  " +
+            "    o.vehiculo_id = :vehiculoId;", nativeQuery = true)
+    List<HistoricoVehiculoDto> consultarHistoricoVehiculo(Integer vehiculoId);
 }

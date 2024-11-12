@@ -16,6 +16,7 @@ public class OrdenAutoparte {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+    Integer cantidad;
     @ManyToOne
     @JoinColumn (name = "autoparte_id")
     private Autoparte autoparte;
