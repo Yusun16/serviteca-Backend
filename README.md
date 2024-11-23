@@ -168,31 +168,6 @@ Para más detalles, consulta el archivo `application.properties` del backend.
 
 ---
 
-## 🖼️ Capturas de pantalla
-
-(Añade capturas de pantalla aquí para ilustrar la funcionalidad del sistema).
-
----
-
-## 🤝 Contribuciones
-
-1. Realiza un fork del repositorio.
-2. Crea una nueva rama:
-   ```bash
-   git checkout -b feature/nueva-funcionalidad
-   ```
-3. Realiza los cambios y crea un commit:
-   ```bash
-   git commit -m "Nueva funcionalidad añadida"
-   ```
-4. Envía tus cambios:
-   ```bash
-   git push origin feature/nueva-funcionalidad
-   ```
-5. Abre un Pull Request en el repositorio correspondiente.
-
----
-
 ## 📄 Licencia
 
 Este proyecto está bajo la licencia MIT. Consulta el archivo `LICENSE` para más información.
